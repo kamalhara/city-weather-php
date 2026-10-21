@@ -112,6 +112,18 @@ nav a,
     border-bottom: 2px solid transparent;
 }
 
+.github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.github-link svg {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+}
+
 nav a[aria-current="page"],
 .unit-switch a[aria-current="true"] {
     border-bottom-color: var(--ink);
