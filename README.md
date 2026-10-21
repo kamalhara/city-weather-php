@@ -34,6 +34,28 @@ Saved places and recent searches use PostgreSQL on Vercel. Weather responses and
 
 If you deploy without setting `DATABASE_URL` or `POSTGRES_URL`, requests that load saved-place data will return an error. Vercel functions have a read-only application filesystem, so the local JSON store cannot be used there.
 
+## Deploy to Render
+
+The repository includes a Dockerfile for Render's Docker web service. The container runs Apache with PHP 8.4 and listens on port `10000`.
+
+1. Push the repository to GitHub.
+2. In Render, choose **New → Web Service**, connect the repository, and select **Docker** as the runtime.
+3. Add `DATABASE_URL` with a PostgreSQL connection URL (or use `POSTGRES_URL`). This keeps saved places and recent searches outside the service's local filesystem.
+4. Create the service. Render builds from the Dockerfile and publishes an `onrender.com` URL.
+
+Render's free web services have an ephemeral filesystem, so file-based saves can disappear after restarts or spin-downs. Use PostgreSQL for durable saved places; Render's free PostgreSQL databases expire after 30 days, so use a database plan/provider that fits your needs for longer-term data.
+
+## Deploy to InfinityFree
+
+InfinityFree's free hosting runs standard PHP and can use this project's local JSON storage without a database. The project requires PHP 8.1 or newer.
+
+1. Create a free hosting account and domain/subdomain in the InfinityFree client area.
+2. Use the account's FTP details with an FTP client, or its online file manager, and upload the website files into `htdocs`. Put `index.php` directly in `htdocs`, not inside a nested project folder.
+3. Upload the `api/`, `assets/`, `cache/`, `data/`, and `includes/` folders, including the hidden `.htaccess` files in `cache/` and `data/`.
+4. Open the account's domain. The app creates `data/store.json` as visitors save places and browse cities.
+
+The `data/.htaccess` file prevents visitors from downloading saved-place records, and `cache/.htaccess` protects cached files. If uploading with FTP, enable showing hidden files so the `.htaccess` files are included. InfinityFree allows outbound HTTP/HTTPS requests for PHP API clients, which the weather lookups need.
+
 ## Project files
 
 ```text
