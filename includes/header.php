@@ -37,7 +37,7 @@ $querySuffix = isset($_GET['city']) || isset($_GET['lat'])
                 <span class="brand-name">City Weather</span>
             </a>
             <nav aria-label="Main">
-                <a href="index.php"<?= $page === 'index' ? ' aria-current="page"' : '' ?>>Today</a>
+                <a href="index.php"<?= $page === 'home' ? ' aria-current="page"' : '' ?>>Today</a>
                 <a href="forecast.php"<?= $page === 'forecast' ? ' aria-current="page"' : '' ?>>Forecast</a>
                 <a href="places.php"<?= $page === 'places' ? ' aria-current="page"' : '' ?>>Places</a>
                 <a href="about.php"<?= $page === 'about' ? ' aria-current="page"' : '' ?>>About</a>
