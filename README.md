@@ -36,14 +36,14 @@ If you deploy without setting `DATABASE_URL` or `POSTGRES_URL`, requests that lo
 
 ## Deploy to Render
 
-The repository includes a Dockerfile for Render's Docker web service. The container runs Apache with PHP 8.4 and listens on port `10000`.
+The `Dockerfile` runs Apache with PHP 8.4, the cURL and PostgreSQL PDO extensions, and listens on Render's expected port `10000`. It serves the PHP pages and the frontend assets from the same web service.
 
 1. Push the repository to GitHub.
 2. In Render, choose **New → Web Service**, connect the repository, and select **Docker** as the runtime.
 3. Add `DATABASE_URL` with a PostgreSQL connection URL (or use `POSTGRES_URL`). This keeps saved places and recent searches outside the service's local filesystem.
 4. Create the service. Render builds from the Dockerfile and publishes an `onrender.com` URL.
 
-Render's free web services have an ephemeral filesystem, so file-based saves can disappear after restarts or spin-downs. Use PostgreSQL for durable saved places; Render's free PostgreSQL databases expire after 30 days, so use a database plan/provider that fits your needs for longer-term data.
+Without `DATABASE_URL` or `POSTGRES_URL`, the app falls back to local JSON storage. Render's filesystem is ephemeral, so saved places and recent searches can disappear after a restart or spin-down. Free web services also spin down after 15 minutes without traffic and can take about a minute to start again. Render's free PostgreSQL databases expire after 30 days, so use a database plan/provider that fits your needs for longer-term data.
 
 ## Deploy to InfinityFree
 
