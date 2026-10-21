@@ -51,5 +51,5 @@ $querySuffix = isset($_GET['city']) || isset($_GET['lat'])
                 <a href="?units=imperial<?= e($querySuffix) ?>"<?= $units === 'imperial' ? ' aria-current="true"' : '' ?>>°F</a>
             </div>
         </div>
-    </header>
+    </header>so 
     <main id="content" class="page">

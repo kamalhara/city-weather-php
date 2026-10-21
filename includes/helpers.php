@@ -13,6 +13,12 @@ function redirect(string $path): void
     exit;
 }
 
+function is_https_request(): bool
+{
+    return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+        || strtolower((string) ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '')) === 'https';
+}
+
 function current_page(): string
 {
     $script = basename($_SERVER['SCRIPT_NAME'] ?? 'index.php');
@@ -154,7 +160,7 @@ function fetch_json(string $url): array
 
 function cache_get(string $key, int $ttl): ?array
 {
-    $file = dirname(__DIR__) . '/cache/' . $key . '.json';
+    $file = cache_directory() . '/' . $key . '.json';
     if (!is_file($file)) {
         return null;
     }
@@ -167,11 +173,25 @@ function cache_get(string $key, int $ttl): ?array
 
 function cache_put(string $key, array $value): void
 {
-    $dir = dirname(__DIR__) . '/cache';
+    $dir = cache_directory();
     if (!is_dir($dir)) {
-        mkdir($dir, 0775, true);
+        @mkdir($dir, 0775, true);
     }
-    file_put_contents($dir . '/' . $key . '.json', json_encode($value));
+    @file_put_contents($dir . '/' . $key . '.json', json_encode($value));
+}
+
+function cache_directory(): string
+{
+    if (getenv('VERCEL')) {
+        $directory = rtrim(sys_get_temp_dir(), '/') . '/city-weather-cache';
+    } else {
+        $directory = dirname(__DIR__) . '/cache';
+    }
+
+    if (!is_dir($directory)) {
+        @mkdir($directory, 0775, true);
+    }
+    return $directory;
 }
 
 function uv_badge(float $uv): array

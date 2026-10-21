@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/*.php": {
+      "runtime": "vercel-php@0.9.0"
+    }
+  },
+  "rewrites": [
+    { "source": "/", "destination": "/api/index.php" },
+    { "source": "/index.php", "destination": "/api/index.php" },
+    { "source": "/forecast.php", "destination": "/api/forecast.php" },
+    { "source": "/places.php", "destination": "/api/places.php" },
+    { "source": "/about.php", "destination": "/api/about.php" },
+    { "source": "/save.php", "destination": "/api/save.php" }
+  ]
+}

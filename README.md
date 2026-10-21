@@ -21,6 +21,19 @@ php -S localhost:8000
 
 Then open http://localhost:8000. The server needs internet access to reach the Open-Meteo APIs.
 
+## Deploy to Vercel
+
+This project uses Vercel's community PHP runtime (`vercel-php`) with a small function wrapper for each page. Vercel runs PHP as serverless functions rather than as a persistent PHP server.
+
+1. Create a PostgreSQL database with a Vercel Marketplace integration or another PostgreSQL provider.
+2. Import this GitHub repository into Vercel. Use the **Other** framework preset and leave the build command empty; Vercel serves the CSS directly from `assets/`.
+3. In the Vercel project settings, add `DATABASE_URL` with the provider's PostgreSQL connection URL. `POSTGRES_URL` is also accepted. The app creates its `city_weather_visitor_store` table automatically on first request.
+4. Deploy the project. The PHP runtime and page rewrites are configured in `vercel.json`.
+
+Saved places and recent searches use PostgreSQL on Vercel. Weather responses and reverse-geocoding results use `/tmp` as an optional cache, so cache misses after a function restart are expected. Local development continues to use `data/store.json` and the repository's `cache/` directory when no database URL is set.
+
+If you deploy without setting `DATABASE_URL` or `POSTGRES_URL`, requests that load saved-place data will return an error. Vercel functions have a read-only application filesystem, so the local JSON store cannot be used there.
+
 ## Project files
 
 ```text

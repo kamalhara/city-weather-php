@@ -40,7 +40,7 @@ function reverse_geocode_location(float $latitude, float $longitude): array
     }
 
     // Nominatim's public endpoint allows at most one request per second per app.
-    $lockPath = dirname(__DIR__) . '/cache/nominatim-rate-limit.lock';
+    $lockPath = cache_directory() . '/nominatim-rate-limit.lock';
     $lock = @fopen($lockPath, 'c+');
     if ($lock !== false) {
         flock($lock, LOCK_EX);
