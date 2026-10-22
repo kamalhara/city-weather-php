@@ -1,6 +1,6 @@
 # City Weather Dashboard
 
-A PHP weather dashboard that searches worldwide locations, detects the browser's location and names its nearby city, shows current conditions and the next 12 hours, and provides a seven-day outlook. It uses [Open-Meteo](https://open-meteo.com/) for weather data and city search, plus OpenStreetMap Nominatim for reverse geocoding; no API key is needed.
+A PHP weather dashboard that searches worldwide locations, detects the browser's location and names its nearby city, shows current conditions and the next 12 hours, and provides a seven-day outlook. It uses [Open-Meteo](https://open-meteo.com/) for weather data and city search, plus OpenStreetMap Nominatim for reverse geocoding; no API key is needed
 
 ## Features
 
